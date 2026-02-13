@@ -2,6 +2,7 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
+<<<<<<< HEAD
   async headers() {
     return [
       {
@@ -16,6 +17,8 @@ const nextConfig = {
       }
     ]
   }
+=======
+>>>>>>> d5d954e4645416031a5eadfd9b9a5ac3c70e21d4
 };
 
 export default nextConfig;

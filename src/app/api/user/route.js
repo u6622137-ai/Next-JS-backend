@@ -45,10 +45,17 @@ export async function POST(req) {
         const result = await db.collection("user").insertOne({
             username: data.username,
             email: data.email,
+<<<<<<< HEAD
             firstname: data.firstname,
             lastname: data.lastname,
             status: data.status || "ACTIVE",
             profileImage: data.profileImage || null
+=======
+            firstName: data.firstName,
+            lastName: data.lastName,
+            password: data.password,
+            status: "ACTIVE"
+>>>>>>> d5d954e4645416031a5eadfd9b9a5ac3c70e21d4
         });
 
         return NextResponse.json({ id: result.insertedId }, {
