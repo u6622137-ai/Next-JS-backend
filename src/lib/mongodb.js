@@ -1,10 +1,10 @@
+// src/lib/mongodb.js
 import { MongoClient } from "mongodb";
-<<<<<<< HEAD
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || process.env.MONGODB;
 
 if (!uri) {
-  throw new Error("Please define MONGODB_URI in .env.local");
+  throw new Error("Missing MongoDB connection string. Set MONGODB_URI (or MONGODB) in your env.");
 }
 
 const options = {};
@@ -12,6 +12,7 @@ const options = {};
 let client;
 let clientPromise;
 
+// In development, use a global variable so the client is reused across HMR reloads
 if (process.env.NODE_ENV === "development") {
   if (!global._mongoClientPromise) {
     client = new MongoClient(uri, options);
@@ -19,29 +20,12 @@ if (process.env.NODE_ENV === "development") {
   }
   clientPromise = global._mongoClientPromise;
 } else {
+  // In production, create a new client for the server
   client = new MongoClient(uri, options);
   clientPromise = client.connect();
 }
 
-export function getClientPromise() {
+// ✅ This matches what your routes import: getClientPromise()
+export async function getClientPromise() {
   return clientPromise;
 }
-=======
-const options = {};
-let globalClientPromise;
-export function getClientPromise() {
-const uri = process.env.MONGODB_URI;
-if (!uri) {
-    throw new Error("Please add your Mongo URI to .env.local or set MONGODB_URIenv variable");
-}
-if (process.env.NODE_ENV === "development") {
-if (!globalClientPromise) {
-const client = new MongoClient(uri, options);
-globalClientPromise = client.connect();
-}
-return globalClientPromise;
-} else {const client = new MongoClient(uri, options);
-return client.connect();
-}
-}
->>>>>>> d5d954e4645416031a5eadfd9b9a5ac3c70e21d4
